@@ -37,6 +37,4 @@ $RECYCLE.BIN/
 ## Directories
 #################
 
-dev/
-cms/core/config/
-node_modules/
+App/node_modules/
