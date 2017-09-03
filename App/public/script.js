@@ -86,14 +86,15 @@ function createTodoElement(id, todo_object){
 
     if (todo_object.status == "ACTIVE"){
 
-        var complete_button = document.createElement("input");
+        var active_check = document.createElement("input");
         // complete_button.innerText = "Mark as Complete";
-        complete_button.setAttribute("onclick", "changeTodoAJAX("+id+", "+"'COMPLETED')");
-        complete_button.setAttribute("class", "breathHorizontal");
-        complete_button.setAttribute("type", "checkbox");
-        todo_element.appendChild(complete_button);
-        todo_element.append(todo_object.title);
+        active_check.setAttribute("onclick", "changeTodoAJAX("+id+", "+"'COMPLETED')");
+        active_check.setAttribute("class", "breathHorizontal");
+        active_check.setAttribute("type", "checkbox");
+        todo_element.appendChild(active_check);
+        todo_element.innerHTML += (todo_object.title);
         todo_element.appendChild(delete_button);
+        console.log(todo_element);
 
 
 

@@ -29,3 +29,64 @@ div.todoStatusDELETED {
     text-decoration : line-through;
 
 }
+
+/*to create everything in center of page*/
+.main {
+    text-align: center;
+    margin: 10px auto;
+    width: 50%;
+    border: black solid 2px;
+}
+
+h1{
+    text-align: center;
+    margin: 10px auto;
+}
+
+.todo_list h4{
+    text-align: left;
+    margin: 2px 10px;
+    /*border: blue solid 2px;*/
+}
+
+.todo_list .breathVertical {
+
+    text-align: left;
+    margin: 5px 50px;
+    width: 50%;
+    padding: 10px 0;
+    /*border-bottom: black solid 2px;*/
+}
+
+
+.todo_list .todo_title {
+    margin: 5px 5px;
+    text-align: left;
+    /*border: orange solid 1px;*/
+
+    width: 30%
+}
+
+.todo_list button {
+    float: right;
+}
+
+.todo_list {
+    margin: 2px auto;
+    width: 95%;
+    border-bottom: black solid 2px ;
+
+}
+
+.new_todo_add {
+
+    margin: 50px 0px;
+    width: 75%;
+    /*border: pink solid 2px ;*/
+}
+
+.new_todo_add input[type=text]{
+    float:  left;
+    margin-left: 5%;
+    width: 55%;
+}
