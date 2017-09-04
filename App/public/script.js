@@ -5,6 +5,12 @@ const ACTIVE_TODOS_ID = "active_todos_list_div";
 const COMPLETED_TODOS_ID = "completed_todos_list_div";
 const DELETED_TODOS_ID = "deleted_todos_list_div";
 
+const SHOWHIDE_COMPLETED_ID = "allowShowHideCompleted";
+const SHOWHIDE_DELETED_ID = "allowShowHideDeleted";
+const SHOWHIDE_ACTIVE_ID = "allowShowHideActive";
+const SHOWHIDE_LINK_ID1 = 'showHideLink1';
+const SHOWHIDE_LINK_ID2 = 'showHideLink2';
+
 const NEW_TODO_INPUT_ID = "new_todo_input";
 
 
@@ -21,6 +27,30 @@ window.onload = getTodosAJAX();
 // todos_data_json =
 // parent = div
 
+function changeVisibility(id, currElemId)
+{
+    console.log(id);
+    var showHideElem = document.getElementById(id);
+    var currElem = document.getElementById(currElemId);
+    // var currElem = document.getElementById("showHideLink");
+
+    l = currElem.innerText.length;
+
+    console.log(showHideElem.style.display);
+    if(showHideElem.style.display != "none") {
+        showHideElem.style.display = "none";
+        currElem.innerText = currElem.innerText.substr(5, l - 5);
+        currElem.innerText = "Show " + currElem.innerText;
+
+    }
+    else {
+        showHideElem.style.display = "block";
+        currElem.innerText = currElem.innerText.substr(5 , l - 5);
+        currElem.innerText = "Hide " + currElem.innerText;
+    }
+}
+
+
 // need only one arg(todos object) and add todos_list according to their status
 // active todos goes to ACTIVE_TODOS_ID
 // completed todos goes to COMPLETED_TODOS_ID
@@ -35,9 +65,19 @@ function addTodoElements(todos_data_json){
     var deletedParent = document.getElementById(DELETED_TODOS_ID);
 
     // HW : Figure out "encouraged" view of doing this
-    activeParent.innerHTML = "<h4>Active Todos</h4>";
-    completedParent.innerHTML = "<h4>Completed Todos</h4>";
-    deletedParent.innerHTML = "<h4>Deleted Todos</h4>";
+    activeParent.innerHTML = "<h4>Active Todos</h4> ";
+    completedParent.innerHTML = "<h4>Completed Todos </h4> <br> <a href='#' id='showHideLink1' onclick='changeVisibility(SHOWHIDE_COMPLETED_ID, SHOWHIDE_LINK_ID1)'>Hide Completed Items</a>";
+    deletedParent.innerHTML = "<h4>Deleted Todos </h4><br> <a href='#' id='showHideLink2' onclick='changeVisibility(SHOWHIDE_DELETED_ID, SHOWHIDE_LINK_ID2)'>Hide Deleted Items</a>";
+
+    var completed_todos_div = document.createElement("div");
+    completed_todos_div.setAttribute("id", SHOWHIDE_COMPLETED_ID);
+
+    var deleted_todos_div = document.createElement("div");
+    deleted_todos_div.setAttribute("id", SHOWHIDE_DELETED_ID);
+
+    var active_todos_div = document.createElement("div");
+    active_todos_div.setAttribute("id", SHOWHIDE_ACTIVE_ID)
+
 
     if (parent){
 
@@ -47,20 +87,24 @@ function addTodoElements(todos_data_json){
             function(key) {
                 var todo_element = createTodoElement(key, todos[key]);
                 if(todos[key].status == "ACTIVE") {
-                    activeParent.appendChild(todo_element);
+                    active_todos_div.appendChild(todo_element);
 
                 }
 
                 if(todos[key].status == "COMPLETED") {
-                    completedParent.appendChild(todo_element);
+                    completed_todos_div.appendChild(todo_element);
                 }
 
                 if(todos[key].status == "DELETED") {
-                    deletedParent.appendChild(todo_element);
+                    deleted_todos_div.appendChild(todo_element);
                 }
 
             }
         )
+
+        activeParent.appendChild(active_todos_div);
+        completedParent.appendChild(completed_todos_div);
+        deletedParent.appendChild(deleted_todos_div);
     }
 }
 // id : 1
@@ -87,18 +131,30 @@ function createTodoElement(id, todo_object){
 
     delete_button.innerText = "x";
 
-    if (todo_object.status == "ACTIVE"){
+    if (todo_object.status == "ACTIVE") {
 
         var active_check = document.createElement("input");
         // complete_button.innerText = "Mark as Complete";
-        active_check.setAttribute("onclick", "changeTodoAJAX("+id+", "+"'COMPLETED')");
-        active_check.setAttribute("class", "breathHorizontal");
+        active_check.setAttribute("onclick", "changeTodoAJAX(" + id + ", " + "'COMPLETED')");
         active_check.setAttribute("type", "checkbox");
-        todo_element.appendChild(active_check);
-        todo_element.innerHTML += (todo_object.title);
-        todo_element.appendChild(delete_button);
-        console.log(todo_element);
+        active_check.setAttribute("class", "breathHorizontal");
+        active_check.setAttribute("class", "styled");
+        active_check.setAttribute("id", "check" + id);
 
+        var active_div = document.createElement("div");
+        active_div.setAttribute("class", "checkbox");
+        active_div.appendChild(active_check);
+
+        var active_label = document.createElement("label");
+        active_label.innerText = todo_object.title;
+        active_label.setAttribute("for", "check" + id);
+
+        active_div.appendChild(active_label);
+        active_div.appendChild(delete_button);
+
+        todo_element.appendChild(active_div);
+        // todo_element.innerHTML += ("<label for='check1'>" + todo_object.title + "</label>");
+        console.log(todo_element);
 
 
     }
@@ -116,16 +172,43 @@ function createTodoElement(id, todo_object){
 
     if (todo_object.status == "COMPLETED") {
         console.log(todo_object);
+        // var completed_check = document.createElement("input");
+        // // complete_button.innerText = "Mark as Complete";
+        // completed_check.setAttribute("onclick", "changeTodoAJAX("+id+", "+"'ACTIVE')");
+        // completed_check.setAttribute("class", "breathHorizontal");
+        // completed_check.setAttribute("type", "checkbox");
+        // completed_check.setAttribute("checked", "");
+        // todo_element.appendChild(completed_check);
+        // todo_element.append(todo_object.title);
+        // todo_element.appendChild(delete_button);
+
+
         var completed_check = document.createElement("input");
         // complete_button.innerText = "Mark as Complete";
-        completed_check.setAttribute("onclick", "changeTodoAJAX("+id+", "+"'ACTIVE')");
-        completed_check.setAttribute("class", "breathHorizontal");
+        completed_check.setAttribute("onclick", "changeTodoAJAX(" + id + ", " + "'ACTIVE')");
         completed_check.setAttribute("type", "checkbox");
+        completed_check.setAttribute("class", "breathHorizontal");
+        completed_check.setAttribute("class", "styled");
         completed_check.setAttribute("checked", "");
-        todo_element.appendChild(completed_check);
-        todo_element.append(todo_object.title);
-        todo_element.appendChild(delete_button);
+        completed_check.setAttribute("id", "check" + id);
 
+        var completed_div = document.createElement("div");
+        completed_div.setAttribute("class", "checkbox checkbox-primary");
+
+
+        // active_div.setAttribute("class", "todoStatus"+ todo_object.status);
+        completed_div.appendChild(completed_check);
+
+        var completed_label = document.createElement("label");
+        completed_label.innerText = todo_object.title;
+        completed_label.setAttribute("for", "check" + id);
+        completed_label.setAttribute("style", "text-decoration: line-through;");
+
+
+        completed_div.appendChild(completed_label);
+        completed_div.appendChild(delete_button);
+
+        todo_element.appendChild(completed_div);
 
     }
 
@@ -198,6 +281,7 @@ function changeTodoAJAX(id, status){
     // Make a AJAX Request to update todo with the above id
     // If Response is 200 : refreshTodoElements
 
+    console.log(id + ' ' + status);
 
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", "/api/todos/"+id, true);
@@ -212,7 +296,6 @@ function changeTodoAJAX(id, status){
         if (xhr.readyState == RESPONSE_DONE) {
             if (xhr.status == STATUS_OK) {
                 var todos = xhr.responseText;
-
 
                 addTodoElements(xhr.responseText);
             }
