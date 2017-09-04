@@ -36,8 +36,8 @@ div.todoStatusDELETED {
     text-align: center;
     margin: 10px auto;
     width: 50%;
-    border: #777 solid 1px;
-
+    border: #f2f2f2 solid 1px;
+    background: #f2f2f2;
     -webkit-box-shadow: 10px 10px 6px -6px #777;
     -moz-box-shadow: 10px 10px 6px -6px #777;
     box-shadow: 10px 10px 6px -6px #777;
