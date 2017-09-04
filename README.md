@@ -37,6 +37,14 @@ node index.js
 
 Now server is running. Go to http://localhost:4000/ and start experimenting.
 
+## Features Built
+```
+1. Add a todo task
+2. Mark a todo task completed
+3. Delete a todo task
+4. Show or hide completed and deleted tasks
+```
+
 ## Authors
 
 * **Anoop Kumar** - *Initial work* - [anoopk23](https://github.com/anoopk23)
