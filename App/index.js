@@ -155,8 +155,7 @@ app.put("/api/todos/:id", function(req, res) {
 
         if(todo_status &&
             (todo_status == todos_db.StatusENUMS.ACTIVE ||
-                todo_status== todos_db.StatusENUMS.COMPLETED ||
-                todo_status == todos_db.StatusENUMS.DELETED)
+                todo_status== todos_db.StatusENUMS.COMPLETED)
         ) {
             todo.status = todo_status;
         }

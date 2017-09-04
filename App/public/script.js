@@ -124,7 +124,7 @@ function createTodoElement(id, todo_object){
 
     var delete_button = document.createElement("button");
     // complete_button.innerText = "Mark as Complete";
-    delete_button.setAttribute("onclick", "changeTodoAJAX("+id+", "+"'DELETED')");
+    delete_button.setAttribute("onclick", "deleteTodoAJAX("+id+", "+"'DELETED')");
     delete_button.setAttribute("class", "breathHorizontal");
     delete_button.setAttribute("class", "close");
     delete_button.setAttribute("style", "color: red;");
@@ -168,6 +168,7 @@ function createTodoElement(id, todo_object){
         var deleted_text = todo_object.title;
 
         todo_element.innerText = (deleted_text);
+
     }
 
     if (todo_object.status == "COMPLETED") {
@@ -286,7 +287,7 @@ function changeTodoAJAX(id, status){
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", "/api/todos/"+id, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    if(status == "COMPLETED" || status == "ACTIVE" || status == "DELETED")
+    if(status == "COMPLETED" || status == "ACTIVE")
         data = "todo_status=" + status;
     else
         console.log("Error: status \""+status+"\" " + "not recognised");
@@ -312,6 +313,39 @@ function changeTodoAJAX(id, status){
     // The body can contain these parameters (XWFUE format)
     //todo_title=newtitle
     //todo_status= ACTIVE/COMPLETE/DELETED
+
+}
+
+function deleteTodoAJAX(id)
+{
+    // Make a AJAX Request to update todo with the above id
+    // If Response is 200 : refreshTodoElements
+
+    // console.log(id + ' ' + status);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/api/todos/"+id, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    data = "todo_status=DELETED";
+
+    xhr.onreadystatechange = function(){
+
+        if (xhr.readyState == RESPONSE_DONE) {
+            if (xhr.status == STATUS_OK) {
+                var todos = xhr.responseText;
+
+                addTodoElements(xhr.responseText);
+            }
+            else {
+                console.log(xhr.responseText);
+            }
+        }
+    }
+
+
+
+    xhr.send(data);
 
 }
 
