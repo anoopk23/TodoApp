@@ -82,7 +82,10 @@ function createTodoElement(id, todo_object){
     // complete_button.innerText = "Mark as Complete";
     delete_button.setAttribute("onclick", "changeTodoAJAX("+id+", "+"'DELETED')");
     delete_button.setAttribute("class", "breathHorizontal");
-    delete_button.innerText = "Delete";
+    delete_button.setAttribute("class", "close");
+    delete_button.setAttribute("style", "color: red;");
+
+    delete_button.innerText = "x";
 
     if (todo_object.status == "ACTIVE"){
 

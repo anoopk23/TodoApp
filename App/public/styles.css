@@ -15,11 +15,11 @@ Rule - Selector, Descriptor
 
 div.todoStatusACTIVE {
 
-    color : blue;
+    color : black;
 }
 
 
-div.todoStatusCOMPLETE{
+div.todoStatusCOMPLETED{
     color : green;
     text-decoration : line-through;
 }
